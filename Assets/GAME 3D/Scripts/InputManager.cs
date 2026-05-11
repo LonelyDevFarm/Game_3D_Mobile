@@ -33,21 +33,25 @@ public class InputManager : MonoBehaviour
 
         if (hit.collider == null)
         {
-            if (currentItem != null)
-                currentItem.Deselect();
-            currentItem = null;
+            DeselectCurrentItem();
             return;
         }
         if (!hit.collider.TryGetComponent(out Item item))
         {
-            if (currentItem != null)
-                currentItem.Deselect();
-            currentItem = null;
+            DeselectCurrentItem();
             return;
         }
-        Debug.Log("clicked: " + hit.collider.name);
+
+        DeselectCurrentItem();
         currentItem = item;
         currentItem.Select(outlineMaterial);
+    }
+
+    private void DeselectCurrentItem()
+    {
+        if (currentItem != null)
+            currentItem.Deselect();
+        currentItem = null;
     }
 
     private void HandleMouseUp()
